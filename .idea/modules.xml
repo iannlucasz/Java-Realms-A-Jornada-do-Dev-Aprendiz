@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Java-Realms-A-Jornada-do-Dev-Aprendiz.iml" filepath="$PROJECT_DIR$/.idea/Java-Realms-A-Jornada-do-Dev-Aprendiz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projetoFinal/projetoFinal.iml" filepath="$PROJECT_DIR$/projetoFinal/projetoFinal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana01/semana01.iml" filepath="$PROJECT_DIR$/semana01/semana01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana02/semana02.iml" filepath="$PROJECT_DIR$/semana02/semana02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana03/semana03.iml" filepath="$PROJECT_DIR$/semana03/semana03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana04/semana04.iml" filepath="$PROJECT_DIR$/semana04/semana04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana05/semana05.iml" filepath="$PROJECT_DIR$/semana05/semana05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana06/semana06.iml" filepath="$PROJECT_DIR$/semana06/semana06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana07/semana07.iml" filepath="$PROJECT_DIR$/semana07/semana07.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semana08/semana08.iml" filepath="$PROJECT_DIR$/semana08/semana08.iml" />
+    </modules>
+  </component>
+</project>

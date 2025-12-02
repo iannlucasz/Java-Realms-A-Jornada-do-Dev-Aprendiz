@@ -22,6 +22,24 @@ public class Produto {
         return resultado;
     }
 
+    // Entrada
+    public int mostrarMenuInicial() {
+        String menu =
+                "Informe o tipo do produto que deseja registrar:\n" +
+                        "1 - Legumes (Kg)\n" +
+                        "2 - Frutas (Kg)\n" +
+                        "3 - Verduras (Unidade)\n" +
+                        "4 - Doces (Unidade)\n" +
+                        "5 - Bebidas (Unidade)\n" +
+                        "6 - Carnes (Kg)\n";
+
+        int respostaMenu = Integer.parseInt(JOptionPane.showInputDialog(menu));
+
+        return respostaMenu; // devolve o número escolhido
+    }
+
+
+
     // Saída final
     public void mostrarProduto() {
         String mensagem =

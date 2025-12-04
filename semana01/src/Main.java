@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Main {
@@ -8,91 +10,105 @@ public class Main {
     static NumberFormat nf = NumberFormat.getNumberInstance(brasil);
 
     public static void main(String[] args) {
-        // === Produto 01 ===
 
-        Produto prod1 = new Produto();
-        int tipo = prod1.mostrarMenuInicial(); // recebe a resposta + mostra o menu
+        List<Produto> produtos = new ArrayList<>();
 
-        // Dados do Produto 01
-        switch(tipo) {
-            case 1, 2 , 6:
-                // Informar nome do produto
-                prod1.nome = JOptionPane.showInputDialog("Informe o nome do produto");
-                // Informar quantidade do produto
-                prod1.quantidade = Integer.parseInt(JOptionPane.showInputDialog("Informe a quantidade do produto [ " + prod1.nome + " ] em KG:"));
-                // Informar preço do kilo do produto + Formatações para aceitar ponto ou vírgula
-                try {
-                    String precoStr = JOptionPane.showInputDialog("Informe o preço do kilo do produto [ " + prod1.nome + " ]");
-                    prod1.preco = nf.parse(precoStr).doubleValue();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Preço inválido!");
-                    return;
-                }
-                // Tipo do produto
-                if (tipo == 1) {
-                    prod1.tipo = "Legumes";
+        int continuar = 0;
 
-                } else if (tipo == 2) {
-                    prod1.tipo = "Frutas";
+        do {
+            Produto prod = new Produto();
 
-                } else {
-                    prod1.tipo = "Carne";
-                }
-                break;
+            int tipo = prod.mostrarMenuInicial();
 
-            case 3, 4, 5:
-                // Informar nome do produto
-                prod1.nome = JOptionPane.showInputDialog("Informe o nome do produto");
-                // Informar quantidade do produto
-                prod1.quantidade = Integer.parseInt(JOptionPane.showInputDialog("Informe a quantidade do produto [ " + prod1.nome + " ] em Unidade:"));
-                // Informar preço unitário do produto + Formatações para aceitar ponto ou vírgula
-                try {
-                    String precoStr = JOptionPane.showInputDialog("Informe o preço unitário do produto [ " + prod1.nome + " ]");
-                    prod1.preco = nf.parse(precoStr).doubleValue();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Preço inválido!");
-                    return;
-                }
-                // Tipo do produto
-                if (tipo == 3) {
-                    prod1.tipo = "Verduras";
+            switch (tipo) {
+                case 1, 2, 6:
+                    prod.nome = JOptionPane.showInputDialog("Informe o nome do produto");
 
-                } else if (tipo == 4) {
-                    prod1.tipo = "Doces";
+                    // Lê QUANTIDADE como double, aceitando "0,500"
+                    try {
+                        String qtdStr = JOptionPane.showInputDialog("Informe a quantidade de " + prod.nome + ":");
+                        prod.quantidade = nf.parse(qtdStr).doubleValue(); // <-- double
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Quantidade inválida!");
+                        continue;
+                    }
 
-                } else {
-                    prod1.tipo = "Bebidas";
-                }
-                break;
+                    try {
+                        String precoStr = JOptionPane.showInputDialog("Informe o preço por KG de " + prod.nome + ":");
+                        prod.preco = nf.parse(precoStr).doubleValue();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Preço inválido!");
+                        continue;
+                    }
 
-            default:
-                JOptionPane.showMessageDialog(null,"Opção Inválida!");
+                    if (tipo == 1) prod.tipo = "Legumes";
+                    else if (tipo == 2) prod.tipo = "Frutas";
+                    else prod.tipo = "Carne";
 
-        }
+                    break;
+
+                case 3, 4, 5:
+                    prod.nome = JOptionPane.showInputDialog("Informe o nome do produto");
 
 
-        double valorTotal = prod1.preco * prod1.quantidade;
+                    try {
+                        String qtdStr = JOptionPane.showInputDialog("Informe a quantidade de " + prod.nome + ":");
+                        prod.quantidade = nf.parse(qtdStr).doubleValue();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Quantidade inválida!");
+                        continue;
+                    }
 
-        // Aplicação de Desconto
-        int resposta = JOptionPane.showConfirmDialog(null, "Deseja aplicar desconto?");
+                    try {
+                        String precoStr = JOptionPane.showInputDialog("Informe o preço unitário de " + prod.nome);
+                        prod.preco = nf.parse(precoStr).doubleValue();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Preço inválido!");
+                        continue;
+                    }
 
-        if (resposta == JOptionPane.YES_OPTION) {
-            try {
-                String descStr = JOptionPane.showInputDialog("Informe a porcentagem de desconto");
-                prod1.valorPorcentagem = nf.parse(descStr).doubleValue();
-                JOptionPane.showMessageDialog(null, "Desconto aplicado!");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Valor de desconto inválido!");
-                return;
+                    if (tipo == 3) prod.tipo = "Verduras";
+                    else if (tipo == 4) prod.tipo = "Doces";
+                    else prod.tipo = "Bebidas";
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opção inválida!");
+                    continue;
             }
-        } else if (resposta == JOptionPane.NO_OPTION) {
-            JOptionPane.showMessageDialog(null, "Nenhum desconto aplicado!");
+
+            double valorTotal = prod.preco * prod.quantidade; // agora correto para double
+
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja aplicar desconto?");
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    String descStr = JOptionPane.showInputDialog("Informe a porcentagem de desconto:");
+                    prod.valorPorcentagem = nf.parse(descStr).doubleValue();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Desconto inválido!");
+                }
+            }
+
+            prod.calcularDesconto(valorTotal);
+            prod.mostrarProduto();
+            produtos.add(prod);
+
+            continuar = JOptionPane.showConfirmDialog(null, "Deseja registrar outro produto?");
+
+        } while (continuar == JOptionPane.YES_OPTION);
+
+        double totalCarrinho = 0;
+        StringBuilder sb = new StringBuilder("Produtos Registrados:\n\n");
+
+        for (int i = 0; i < produtos.size(); i++) {
+            Produto p = produtos.get(i);
+            sb.append(i).append(" - ").append(p).append("\n");
+            totalCarrinho += p.valorFinal;
         }
 
-        // Calcular Desconto
-        prod1.calcularDesconto(valorTotal);
+        sb.append("\nValor TOTAL do carrinho: R$ ")
+                .append(String.format("%.2f", totalCarrinho));
 
-        // Saída
-        prod1.mostrarProduto();
+        JOptionPane.showMessageDialog(null, sb.toString());
     }
 }

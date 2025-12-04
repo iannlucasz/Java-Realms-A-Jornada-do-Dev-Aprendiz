@@ -1,55 +1,49 @@
 import javax.swing.*;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class Produto {
-
-    public String nome;
     public String tipo;
-    public int quantidade;
-    public double preco;
-    public double valorPorcentagem;
-    public double resultado;
+    public String nome;
+    public double quantidade;       // <-- double, não int
+    public double preco;            // preco por kg ou por unidade
+    public double valorPorcentagem; // porcentagem de desconto (ex: 10 para 10%)
+    public double valorFinal;       // valor após desconto
 
-    // Formatação brasileira
-    static Locale brasil = new Locale("pt", "BR");
-    static NumberFormat nf = NumberFormat.getNumberInstance(brasil);
-
-    // Método que calcula o preço final com desconto
-    public double calcularDesconto(double valorTotal) {
-        double fator = valorPorcentagem / 100.0;
-        resultado = valorTotal * (1 - fator);
-        return resultado;
-    }
-
-    // Entrada
     public int mostrarMenuInicial() {
-        String menu =
-                "Informe o tipo do produto que deseja registrar:\n" +
-                        "1 - Legumes (Kg)\n" +
-                        "2 - Frutas (Kg)\n" +
-                        "3 - Verduras (Unidade)\n" +
-                        "4 - Doces (Unidade)\n" +
-                        "5 - Bebidas (Unidade)\n" +
-                        "6 - Carnes (Kg)\n";
-
-        int respostaMenu = Integer.parseInt(JOptionPane.showInputDialog(menu));
-
-        return respostaMenu; // devolve o número escolhido
+        String menu = """
+                Informe o tipo do produto:
+                1 - Legumes (Kg)
+                2 - Frutas (Kg)
+                3 - Verduras (Un)
+                4 - Doces (Un)
+                5 - Bebidas (Un)
+                6 - Carne (Kg)
+                """;
+        try {
+            String resp = JOptionPane.showInputDialog(menu);
+            return Integer.parseInt(resp);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
+    public void calcularDesconto(double valorTotal) {
+        if (valorPorcentagem > 0) {
+            double desconto = valorTotal * (valorPorcentagem / 100.0);
+            valorFinal = valorTotal - desconto;
+        } else {
+            valorFinal = valorTotal;
+        }
+    }
 
-
-    // Saída final
     public void mostrarProduto() {
-        String mensagem =
-                "Produto: " + nome + "\n" +
-                        "Tipo: " + tipo + "\n" +
-                        "Quantidade: " + quantidade + "\n" +
-                        "Preço unitário: " + nf.format(preco) + "\n" +
-                        "Desconto: " + nf.format(valorPorcentagem) + "%\n" +
-                        "Valor final: " + nf.format(resultado);
+        String msg = String.format("Produto: %s\nTipo: %s\nQuantidade: %s\nPreço unitário: R$ %.2f\nValor final: R$ %.2f",
+                nome, tipo, quantidade, preco, valorFinal);
+        JOptionPane.showMessageDialog(null, msg);
+    }
 
-        JOptionPane.showMessageDialog(null, mensagem);
+    @Override
+    public String toString() {
+        return String.format("Tipo: %s | Nome: %s | Quantidade: %s | Preço: R$ %.2f | Valor final: R$ %.2f",
+                tipo, nome, quantidade, preco, valorFinal);
     }
 }

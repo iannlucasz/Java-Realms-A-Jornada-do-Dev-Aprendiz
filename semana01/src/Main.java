@@ -6,6 +6,7 @@ import java.util.Locale;
 
 public class Main {
 
+
     static Locale brasil = new Locale("pt", "BR");
     static NumberFormat nf = NumberFormat.getNumberInstance(brasil);
 
@@ -24,15 +25,16 @@ public class Main {
                 case 1, 2, 6:
                     prod.nome = JOptionPane.showInputDialog("Informe o nome do produto");
 
-                    // Lê QUANTIDADE como double, aceitando "0,500"
+                    // Lê QUANTIDADE em KG do produto escolhido.
                     try {
                         String qtdStr = JOptionPane.showInputDialog("Informe a quantidade de " + prod.nome + ":");
-                        prod.quantidade = nf.parse(qtdStr).doubleValue(); // <-- double
+                        prod.quantidade = nf.parse(qtdStr).doubleValue();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Quantidade inválida!");
                         continue;
                     }
 
+                    // Lê PREÇO do produto por kg do produto escolhido.
                     try {
                         String precoStr = JOptionPane.showInputDialog("Informe o preço por KG de " + prod.nome + ":");
                         prod.preco = nf.parse(precoStr).doubleValue();
@@ -50,7 +52,7 @@ public class Main {
                 case 3, 4, 5:
                     prod.nome = JOptionPane.showInputDialog("Informe o nome do produto");
 
-
+                    // Lê a QUANTIDADE em UNIDADE do produto escolhido.
                     try {
                         String qtdStr = JOptionPane.showInputDialog("Informe a quantidade de " + prod.nome + ":");
                         prod.quantidade = nf.parse(qtdStr).doubleValue();
@@ -59,6 +61,7 @@ public class Main {
                         continue;
                     }
 
+                    // Lê o PREÇO do produto escolhido.
                     try {
                         String precoStr = JOptionPane.showInputDialog("Informe o preço unitário de " + prod.nome);
                         prod.preco = nf.parse(precoStr).doubleValue();
@@ -77,8 +80,11 @@ public class Main {
                     continue;
             }
 
-            double valorTotal = prod.preco * prod.quantidade; // agora correto para double
+            // Calculo para definir o valorTotal do produto registrado.
+            double valorTotal = prod.preco * prod.quantidade;
 
+
+            // Verificação caso usuário deseja aplicar desconto no produto registrado.
             int resposta = JOptionPane.showConfirmDialog(null, "Deseja aplicar desconto?");
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
@@ -90,22 +96,25 @@ public class Main {
             }
 
             prod.calcularDesconto(valorTotal);
-            prod.mostrarProduto();
-            produtos.add(prod);
+            prod.mostrarProduto(); // Mostrar dados do produto registrado.
+            produtos.add(prod); // Produto registrado vai para fila final.
 
-            continuar = JOptionPane.showConfirmDialog(null, "Deseja registrar outro produto?");
+            continuar = JOptionPane.showConfirmDialog(null, "Deseja registrar outro produto?"); // Verificação caso usuário deseje adicionar mais um produto.
 
         } while (continuar == JOptionPane.YES_OPTION);
 
-        double totalCarrinho = 0;
-        StringBuilder sb = new StringBuilder("Produtos Registrados:\n\n");
 
+        double totalCarrinho = 0;
+
+        // Lista dos produtos registrados
+        StringBuilder sb = new StringBuilder("Produtos Registrados:\n\n");
         for (int i = 0; i < produtos.size(); i++) {
             Produto p = produtos.get(i);
             sb.append(i).append(" - ").append(p).append("\n");
             totalCarrinho += p.valorFinal;
         }
 
+        // Valor Total do carrinho
         sb.append("\nValor TOTAL do carrinho: R$ ")
                 .append(String.format("%.2f", totalCarrinho));
 

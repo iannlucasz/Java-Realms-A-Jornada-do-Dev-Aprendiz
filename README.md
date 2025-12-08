@@ -103,7 +103,7 @@ Dica:
 Sempre se pergunte: “Esse atributo deve mesmo ser alterado por qualquer lugar?”
 
 Mini-exercício:
-**Criar classe Usuario com construtor + getters/setters.**
+**Criar classe classes.Usuario com construtor + getters/setters.**
 
 ### ⚔️ SEMANA 3 — Listas (ArrayList) + Polimorfismo
 

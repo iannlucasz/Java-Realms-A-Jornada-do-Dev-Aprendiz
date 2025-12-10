@@ -18,38 +18,24 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        Usuario usuario = new Usuario();
+        // Nome
+        String nome = JOptionPane.showInputDialog(null,"Informe o seu nome");
 
-        // setters da classe Usuario.
-            // Nome
-            usuario.setNome(JOptionPane.showInputDialog(null, "Informe o seu nome completo."));
-            // Idade
-            try {
-                usuario.setIdade(Integer.parseInt(JOptionPane.showInputDialog(null, "Informe a sua idade")));
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
+        // Idade
+        int idade = 0;
+        try {
+            idade = Integer.parseInt(JOptionPane.showInputDialog(null, "Informe a sua idade"));
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
 
-            // CPF
-            usuario.setCpf(JOptionPane.showInputDialog(null,"Informe o seu CPF: "));
+        // CPF
+        String cpf = JOptionPane.showInputDialog(null,"Informe seu CPF (inclua pontos!)");
 
-        // Validação
-            JOptionPane.showMessageDialog(null,"Usuário Cadastrado!");
+        Usuario usuario = new Usuario(nome,idade,cpf);
 
-        // getters da classe Usuario.
-        JOptionPane.showMessageDialog(
-                null,
-                String.format("Nome: %s | Idade: %s | CPF: %s%n",
-                        usuario.getNome(),
-                        usuario.getIdade(),
-                        usuario.getCpf()
-                )
-        );
-
-
-
-
-
+        JOptionPane.showMessageDialog( null, String.format("Nome: %s | Idade: %s | CPF: %s%n"
+                , usuario.getNome(), usuario.getIdade(), usuario.getCpf() ) );
 
     }
 

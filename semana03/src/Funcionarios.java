@@ -1,9 +1,10 @@
 public class Funcionarios {
+    private static int contadorId = 1;
 
     protected String nome;
     protected String area;
     protected int idade;
-    protected int numIndentificacao;
+    protected int numIndentificacao = contadorId++;
 
 
     public Funcionarios(String nome, String area, int idade, int numIndentificacao) {
@@ -11,6 +12,9 @@ public class Funcionarios {
         this.area = area;
         this.idade = idade;
         this.numIndentificacao = numIndentificacao;
+    }
+
+    public Funcionarios() {
     }
 
     public String getNome() {
